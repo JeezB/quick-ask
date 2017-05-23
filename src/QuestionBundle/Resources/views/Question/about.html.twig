@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Question {{ question.id }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="title">
+            <h2>{{ question.title }}</h2>
+        </div>
+
+        {% for suggestion in question.suggestions %}
+            {% if suggestion.isCorrect == true %}
+                {% set icon = 'check' %}
+                {% set color = 'text-success' %}
+            {% else %}
+                {% set icon = 'close' %}
+                {% set color = 'text-danger' %}
+            {% endif %}
+            <div>
+                <h4><i class="material-icons {{ color }}">{{ icon }}</i> {{ suggestion.title }}  </h4>
+            </div>
+        {% endfor %}
+        <small>Question created the {{ question.createdAt|date('Y-m-d H:i:s') }}</small>
+        {% if question.tag|default %}
+            <span class="label label-info">{{ question.tag }}</span>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

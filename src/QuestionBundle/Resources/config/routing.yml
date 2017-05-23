@@ -1,0 +1,45 @@
+webSite_homepage:
+    path:     /
+    defaults: { _controller: QuestionBundle:Main:index}
+
+
+# Answer routes
+answer_index:
+    path:     /question/{question_id}/answers
+    defaults: { _controller: QuestionBundle:Answer:index}
+
+answer_create:
+    path:     /question/{question_id}/answer/create
+    defaults: { _controller: QuestionBundle:Answer:create}
+
+# Question routes
+question_index:
+    path:     /questions
+    defaults: { _controller: QuestionBundle:Question:index}
+
+question_view:
+    path:     /question/{id}
+    defaults: { _controller: QuestionBundle:Question:view}
+    requirements:
+      id: '\d+'
+
+question_list:
+    path:     /question/list
+    defaults: { _controller: QuestionBundle:Question:list}
+
+question_create:
+    path:     /question/create
+    defaults: { _controller: QuestionBundle:Question:create }
+
+# Suggestion routes
+suggestion_index:
+    path:     /question/{question_id}/suggestions
+    defaults: { _controller: QuestionBundle:Suggestion:index}
+
+suggestion_view:
+    path:     /question/{question_id}/suggestion/{id}
+    defaults: { _controller: QuestionBundle:Suggestion:view}
+
+suggestion_create:
+    path:     /question/{question_id}/suggestion/create
+    defaults: { _controller: QuestionBundle:Suggestion:create}

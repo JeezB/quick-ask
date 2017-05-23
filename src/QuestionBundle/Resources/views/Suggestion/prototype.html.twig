@@ -1,0 +1,18 @@
+<div class="row">
+    <div class="col-sm-2" style="margin-top: 25px">
+        <div class="checkbox">
+            <label>
+                {{ form_widget(form.isCorrect, {'label_attr': {'name': 'optionsCheckboxes'}}) }}<span class="checkbox-material"><span class="check"></span></span>
+                {{ form_label(form.isCorrect, 'Correct ?') }}
+            </label>
+        </div>
+
+
+    </div>
+    <div class="col-sm-8">
+        <div class="form-group label-floating is-empty">
+            {{ form_label(form.title, 'Answer', {'label_attr': {'class': 'control-label'}}) }}
+            {{ form_widget(form.title, {'attr': {'class': 'form-control'}} ) }}
+        </div>
+    </div>
+</div>
