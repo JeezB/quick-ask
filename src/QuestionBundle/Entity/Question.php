@@ -37,6 +37,13 @@ class Question
     private $tag;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="integer")
+     */
+    private $type;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="createdAt", type="datetime", nullable=true)
@@ -235,6 +242,22 @@ class Question
         $this->user = $user;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 }
 
