@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create a new question{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="title">
+            <h3>New question</h3>
+        </div>
+        {{ form_start(form) }}
+
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="form-group label-floating is-empty">
+                    {{ form_label(form.title, 'Question', {'label_attr': {'class': 'control-label'}}) }}
+                    {{ form_widget(form.title, {'attr': {'class': 'form-control'}} ) }}
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group label-floating is-empty">
+                    {{ form_label(form.tag, 'Tag', {'label_attr': {'class': 'control-label'}}) }}
+                    {{ form_widget(form.tag, {'attr': {'class': 'form-control'}} ) }}
+                </div>
+            </div>
+            <div class="col-sm-1" style="margin-top: 25px">
+                <button class="btn btn-success btn-fab btn-fab-mini btn-round btn-tooltip" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Tag is used to help you finding your questions based on a keyword. i.e. Thermodynamics ">
+                    <i class="material-icons">help_outline</i>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <ul class="suggestions" data-prototype="
+                {% filter escape %}
+                     {{ include('QuestionBundle:Suggestion:prototypeRegular.html.twig', { 'form': form.suggestions.vars.prototype }) }}
+                 {% endfilter %}"
+                style="list-style-type: none;"></ul>
+        </div>
+        <div>
+            {{ form_widget(form.save, {'attr': {'class': 'btn btn-success'}} ) }}
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var $collectionHolder;
+
+        // setup an "add a suggestion" link
+        var $addSuggestionLink = $('<a href="#" class="add_suggestion_link", style = "visibility:hidden"><i class="material-icons text-success">add_box</i></a>');
+        var $newLinkLi = $('<li></li>').append($addSuggestionLink);
+
+        jQuery(document).ready(function() {
+            // Get the ul that holds the collection of suggestions
+            $collectionHolder = $('ul.suggestions');
+
+            // add the "add a suggestion" anchor and li to the suggestions ul
+            $collectionHolder.append($newLinkLi);
+
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+            $addSuggestionLink.on('click', function(e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
+
+                // add a new suggestion form (see next code block)
+                addSuggestionForm($collectionHolder, $newLinkLi);
+            });
+
+            addSuggestionForm($collectionHolder, $newLinkLi);
+        });
+
+        function addSuggestionForm($collectionHolder, $newLinkLi) {
+            // Get the data-prototype explained earlier
+            var prototype = $collectionHolder.data('prototype');
+            console.log(prototype);
+
+            // get the new index
+            var index = $collectionHolder.data('index');
+
+            // Replace '__title__' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            var newForm = prototype.replace(/__name__/g, index);
+
+            // increase the index with one for the next item
+            $collectionHolder.data('index', index + 1);
+
+            // Display the form in the page in an li, before the "Add a suggestion" link li
+            var $newFormLi = $('<li></li>').append(newForm);
+            $newLinkLi.before($newFormLi);
+        }
+    </script>
+{% endblock %}

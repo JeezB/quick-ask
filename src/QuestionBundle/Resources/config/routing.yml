@@ -32,8 +32,12 @@ question_list:
     defaults: { _controller: QuestionBundle:Question:list}
 
 question_create:
-    path:     /question/create
-    defaults: { _controller: QuestionBundle:Question:create }
+    path:     /question/create/qcm
+    defaults: { _controller: QuestionBundle:Question:createQcm }
+
+question_create_regular:
+    path:     /question/create/regular
+    defaults: { _controller: QuestionBundle:Question:createRegular }
 
 # Suggestion routes
 suggestion_index:
