@@ -72,6 +72,7 @@ class QuestionController extends Controller
             /** @var Question $question */
             $question = $form->getData();
             $question->setUser($user);
+            $question->setType(1);
             $question->setCreatedAt(new \DateTime('now', new \DateTimeZone('UTC')));
 
             $em = $this->getDoctrine()->getManager();

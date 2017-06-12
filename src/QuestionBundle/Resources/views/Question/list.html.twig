@@ -11,6 +11,9 @@
         {% for question in questions %}
             <div>
                 <h4>
+                    <a href="{{ path('display_suggestions', {'questionId': question.id}) }}">
+                        <button class="btn btn-success btn-sm" href="{{ path('display_suggestions', {'questionId': question.id}) }}">Answer question</button>
+                    </a>
                     <a href="{{ path('question_view', {'id': question.id}) }}">
                         {{ question.title }}
                     </a>
@@ -18,6 +21,7 @@
                     {% if question.tag|default %}
                         <span class="label label-success">{{ question.tag }}</span>
                     {% endif %}
+
                 </h4>
                 <small>Question created the {{ question.createdAt|date('Y-m-d H:i:s') }}</small>
 

@@ -5,12 +5,16 @@ webSite_homepage:
 
 # Answer routes
 answer_index:
-    path:     /question/{question_id}/answers
+    path:     /question/{questionId}/answers
     defaults: { _controller: QuestionBundle:Answer:index}
 
-answer_create:
-    path:     /question/{question_id}/answer/create
-    defaults: { _controller: QuestionBundle:Answer:create}
+display_suggestions:
+    path:     /question/{questionId}/answer
+    defaults: { _controller: QuestionBundle:Answer:displaySuggestions}
+
+answer_question:
+    path:     /question/{questionId}/answer/post
+    defaults: { _controller: QuestionBundle:Answer:answerQuestion}
 
 # Question routes
 question_index:

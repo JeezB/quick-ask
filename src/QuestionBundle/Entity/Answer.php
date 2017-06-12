@@ -90,10 +90,14 @@ class Answer
 
     /**
      * @param Answer $question
+     *
+     * return Answer
      */
     public function setQuestion($question)
     {
         $this->question = $question;
+
+        return $this;
     }
 
     /**
@@ -106,10 +110,14 @@ class Answer
 
     /**
      * @param Answer $suggestion
+     *
+     * return Answer
      */
     public function setSuggestion($suggestion)
     {
         $this->suggestion = $suggestion;
+
+        return $this;
     }
 
     /**

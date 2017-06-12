@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Question {{ question.id }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="title">
+            <h2>{{ question.title }}</h2>
+        </div>
+
+        <form action="{{ path('answer_question', {'questionId': question.id}) }}" method="POST">
+            {% for suggestion in suggestions %}
+                <div class="row">
+                    <div class="radio">
+                        <label style="float:left">
+                            <input type="radio" id="form_suggestion_{{ suggestion.id }}" name="suggestion" value="{{ suggestion.id }}">
+                        </label>
+                        <h5>{{ suggestion.title }}</h5>
+                    </div>
+                </div>
+            {% endfor %}
+            <input type="hidden" value="{{ question.id }}">
+            <button class="btn btn-success" type="submit">Submit </button>
+        </form>
+        <small>Question created the {{ question.createdAt|date('Y-m-d H:i:s') }}</small>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}
