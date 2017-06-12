@@ -16,14 +16,32 @@
                 {% set icon = 'close' %}
                 {% set color = 'text-danger' %}
             {% endif %}
-            <div>
-                <h4><i class="material-icons {{ color }}">{{ icon }}</i> {{ suggestion.title }}  </h4>
+            <div class="col-md-10">
+                <div class="col-md-7">
+                    <h4><i class="material-icons {{ color }}">{{ icon }}</i> {{ suggestion.title }}  </h4>
+                </div>
+                <div class="col-md-3">
+                    {% if ratios[suggestion.id]|default %}
+                        <h4>{{ ratios[suggestion.id] }} answers</h4>
+                    {% else %}
+                        <h4>0 answers</h4>
+                    {% endif %}
+                </div>
+                <div class="col-md-2">
+                    {% if percentages[suggestion.id]|default %}
+                        <h4>{{ percentages[suggestion.id] }}%</h4>
+                    {% else %}
+                        <h4>0%</h4>
+                    {% endif %}
+                </div>
             </div>
         {% endfor %}
-        <small>Question created the {{ question.createdAt|date('Y-m-d H:i:s') }}</small>
-        {% if question.tag|default %}
-            <span class="label label-info">{{ question.tag }}</span>
-        {% endif %}
+        <div class="row col-md-2 text-info" style="float:right, ">
+            <small>Question created the {{ question.createdAt|date('Y-m-d H:i:s') }}</small>
+            {% if question.tag|default %}
+                <span class="label label-info">{{ question.tag }}</span>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
 

@@ -4,6 +4,7 @@ namespace QuestionBundle\Controller;
 
 use QuestionBundle\Entity\Answer;
 use QuestionBundle\Entity\Question;
+use QuestionBundle\Entity\Suggestion;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 

@@ -89,9 +89,9 @@ class Answer
     }
 
     /**
-     * @param Answer $question
+     * @param Question $question
      *
-     * return Answer
+     * @return Answer
      */
     public function setQuestion($question)
     {
@@ -109,11 +109,11 @@ class Answer
     }
 
     /**
-     * @param Answer $suggestion
+     * @param Suggestion $suggestion
      *
-     * return Answer
+     * @return $this
      */
-    public function setSuggestion($suggestion)
+    public function setSuggestion(Suggestion $suggestion)
     {
         $this->suggestion = $suggestion;
 

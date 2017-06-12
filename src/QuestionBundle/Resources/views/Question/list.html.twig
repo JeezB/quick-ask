@@ -12,14 +12,14 @@
             <div>
                 <h4>
                     <a href="{{ path('display_suggestions', {'questionId': question.id}) }}">
-                        <button class="btn btn-success btn-sm" href="{{ path('display_suggestions', {'questionId': question.id}) }}">Answer question</button>
+                        <button class="btn btn-info btn-sm" href="{{ path('display_suggestions', {'questionId': question.id}) }}">Answer question</button>
                     </a>
                     <a href="{{ path('question_view', {'id': question.id}) }}">
-                        {{ question.title }}
+                        <button class="btn btn-simple btn-info">{{ question.title }}</button>
                     </a>
 
                     {% if question.tag|default %}
-                        <span class="label label-success">{{ question.tag }}</span>
+                        <span class="label label-info">{{ question.tag }}</span>
                     {% endif %}
 
                 </h4>

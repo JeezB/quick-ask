@@ -2,6 +2,7 @@
 
 namespace QuestionBundle\Controller;
 
+use QuestionBundle\Entity\Answer;
 use QuestionBundle\Entity\Question;
 use QuestionBundle\Entity\Suggestion;
 use QuestionBundle\Form\Type\SuggestionType;
@@ -27,6 +28,7 @@ class QuestionController extends Controller
      */
     public function viewAction($id)
     {
+        /** @var Question $question */
         $question = $this->getDoctrine()
             ->getRepository('QuestionBundle:Question')
             ->find($id);
@@ -37,8 +39,31 @@ class QuestionController extends Controller
             );
         }
 
+        $ratios = [];
+        $total = 0;
+        /** @var array[Answer] $answers */
+        $answers = $question->getAnswers();
+        /** @var Answer $answer */
+        foreach ($answers as $answer) {
+            $suggestion = $answer->getSuggestion();
+            if (!array_key_exists($suggestion->getId(), $ratios)) {
+                $ratios[$suggestion->getId()] = 0;
+            }
+
+            $ratios[$suggestion->getId()] += 1;
+            $total += 1;
+        }
+
+        $percentages = [];
+        foreach ($ratios as $key => $ratio) {
+            $value = (int)$ratio/(int)$total*100;
+            $percentages[$key] = floatval(round($value, 1));
+        }
+
         return $this->render('QuestionBundle:Question:about.html.twig', [
-            'question' => $question
+            'question' => $question,
+            'ratios' => $ratios,
+            'percentages' => $percentages,
         ]);
     }
 
