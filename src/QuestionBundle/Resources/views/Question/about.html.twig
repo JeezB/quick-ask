@@ -8,40 +8,56 @@
             <h2>{{ question.title }}</h2>
         </div>
 
-        {% for suggestion in question.suggestions %}
-            {% if suggestion.isCorrect == true %}
-                {% set icon = 'check' %}
-                {% set color = 'text-success' %}
-            {% else %}
-                {% set icon = 'close' %}
-                {% set color = 'text-danger' %}
-            {% endif %}
-            <div class="col-md-10">
-                <div class="col-md-7">
-                    <h4><i class="material-icons {{ color }}">{{ icon }}</i> {{ suggestion.title }}  </h4>
+        <div>
+            {% for suggestion in question.suggestions %}
+                {% if suggestion.isCorrect == true %}
+                    {% set icon = 'check' %}
+                    {% set color = 'text-success' %}
+                {% else %}
+                    {% set icon = 'close' %}
+                    {% set color = 'text-danger' %}
+                {% endif %}
+                <div class="col-md-10">
+                    <div class="col-md-7">
+                        <h4><i class="material-icons {{ color }}">{{ icon }}</i> {{ suggestion.title }}  </h4>
+                    </div>
+                    <div class="col-md-3">
+                        {% if ratios[suggestion.id]|default %}
+                            <h4>{{ ratios[suggestion.id] }} answers</h4>
+                        {% else %}
+                            <h4>0 answers</h4>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-2">
+                        {% if percentages[suggestion.id]|default %}
+                            <h4>{{ percentages[suggestion.id] }}%</h4>
+                        {% else %}
+                            <h4>0%</h4>
+                        {% endif %}
+                    </div>
                 </div>
-                <div class="col-md-3">
-                    {% if ratios[suggestion.id]|default %}
-                        <h4>{{ ratios[suggestion.id] }} answers</h4>
-                    {% else %}
-                        <h4>0 answers</h4>
-                    {% endif %}
-                </div>
-                <div class="col-md-2">
-                    {% if percentages[suggestion.id]|default %}
-                        <h4>{{ percentages[suggestion.id] }}%</h4>
-                    {% else %}
-                        <h4>0%</h4>
-                    {% endif %}
+            {% endfor %}
+
+            <div class="row col-md-2 text-info" style="float:right, ">
+                <small>Question created the {{ question.createdAt|date('Y-m-d H:i:s') }}</small>
+                {% if question.tag|default %}
+                    <span class="label label-info">{{ question.tag }}</span>
+                {% endif %}
+            </div>
+        </div>
+        {% if question.type == 2 %}
+            <div>
+                <div class="progress progress-line-danger">
+                    <div class="progress-bar progress-bar-success" style="width: {{ regularPercentages[1] }}%">
+                        <span class="sr-only">{{ regularPercentages[1] }}% Complete (success)</span>
+                    </div>
+
+                    <div class="progress-bar progress-bar-danger" style="width: {{ regularPercentages[0] }}%">
+                        <span class="sr-only">{{ regularPercentages[0] }}% Complete (danger)</span>
+                    </div>
                 </div>
             </div>
-        {% endfor %}
-        <div class="row col-md-2 text-info" style="float:right, ">
-            <small>Question created the {{ question.createdAt|date('Y-m-d H:i:s') }}</small>
-            {% if question.tag|default %}
-                <span class="label label-info">{{ question.tag }}</span>
-            {% endif %}
-        </div>
+        {% endif %}
     </div>
 {% endblock %}
 

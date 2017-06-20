@@ -2,6 +2,7 @@
 
 namespace QuestionBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use QuestionBundle\Entity\Answer;
 use QuestionBundle\Entity\Question;
 use QuestionBundle\Entity\Suggestion;
@@ -40,16 +41,20 @@ class QuestionController extends Controller
         }
 
         $ratios = [];
+        $regularRatios = [];
         $total = 0;
         /** @var array[Answer] $answers */
         $answers = $question->getAnswers();
         /** @var Answer $answer */
         foreach ($answers as $answer) {
+            /** @var Suggestion $suggestion */
             $suggestion = $answer->getSuggestion();
             if (!array_key_exists($suggestion->getId(), $ratios)) {
                 $ratios[$suggestion->getId()] = 0;
+                $regularRatios[$suggestion->isCorrect()] = 0;
             }
 
+            $regularRatios[$suggestion->isCorrect()] += 1;
             $ratios[$suggestion->getId()] += 1;
             $total += 1;
         }
@@ -60,10 +65,17 @@ class QuestionController extends Controller
             $percentages[$key] = floatval(round($value, 1));
         }
 
+        $regularPercentages = [];
+        foreach($regularRatios as $key => $ratio) {
+            $value = (int)$ratio/(int)$total*100;
+            $regularPercentages[$key] = floatval(round($value, 1));
+        }
+
         return $this->render('QuestionBundle:Question:about.html.twig', [
             'question' => $question,
             'ratios' => $ratios,
             'percentages' => $percentages,
+            'regularPercentages' => $regularPercentages,
         ]);
     }
 
@@ -133,10 +145,18 @@ class QuestionController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $suggestion = $question->getSuggestions();
-            foreach($suggestion as $suggestion){
+            $suggestions = $question->getSuggestions();
+            foreach($suggestions as $suggestion){
                 $suggestion->setIsCorrect(true);
             }
+
+            $falseSuggestion = new Suggestion();
+            $falseSuggestion->setQuestion($question);
+            $falseSuggestion->setIsCorrect(false);
+            $falseSuggestion->setTitle('Any other answer');
+
+            $suggestions[] = $falseSuggestion;
+
             // $form->getData() holds the submitted values
             $user = $this->get('security.token_storage')->getToken()->getUser();
             /** @var Question $question */
@@ -144,6 +164,7 @@ class QuestionController extends Controller
             $question->setUser($user);
             $question->setType(2);
             $question->setCreatedAt(new \DateTime('now', new \DateTimeZone('UTC')));
+            $question->setSuggestions($suggestions);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($question);
@@ -166,8 +187,11 @@ class QuestionController extends Controller
                 ],
                 ['createdAt' => 'DESC']);
 
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
         return $this->render('QuestionBundle:Question:list.html.twig', [
-            'questions' => $questions
+            'questions' => $questions,
+            'user' => $user
         ]);
     }
 }

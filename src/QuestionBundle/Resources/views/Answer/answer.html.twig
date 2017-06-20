@@ -8,6 +8,8 @@
             <h2>{{ question.title }}</h2>
         </div>
 
+        {% if question.type == 1 %}
+
         <form action="{{ path('answer_question', {'questionId': question.id}) }}" method="POST">
             {% for suggestion in suggestions %}
                 <div class="row">
@@ -23,6 +25,20 @@
             <button class="btn btn-info" type="submit">Submit </button>
         </form>
         <small>Question created the {{ question.createdAt|date('Y-m-d H:i:s') }}</small>
+
+        {% elseif question.type == 2 %}
+            <form action="{{ path('answer_question_regular', {'questionId': question.id}) }}" method="POST">
+                <div class="row">
+                    <div class="form-group label-floating is-empty">
+                        <label class="control-label required" for="form_answer">Answer</label>
+                        <input class="form-control" id="form_answer" name="suggestion">
+                    </div>
+                </div>
+                <input type="hidden" value="{{ question.id }}">
+                <button class="btn btn-info" type="submit">Submit </button>
+            </form>
+            <small>Question created the {{ question.createdAt|date('Y-m-d H:i:s') }}</small>
+        {% endif %}
     </div>
 {% endblock %}
 

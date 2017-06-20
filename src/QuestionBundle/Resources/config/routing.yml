@@ -16,6 +16,10 @@ answer_question:
     path:     /question/{questionId}/answer/post
     defaults: { _controller: QuestionBundle:Answer:answerQuestion}
 
+answer_question_regular:
+    path:     /question/{questionId}/answer/regular/post
+    defaults: { _controller: QuestionBundle:Answer:answerRegularQuestion}
+
 # Question routes
 question_index:
     path:     /questions

@@ -14,9 +14,15 @@
                     <a href="{{ path('display_suggestions', {'questionId': question.id}) }}">
                         <button class="btn btn-info btn-sm" href="{{ path('display_suggestions', {'questionId': question.id}) }}">Answer question</button>
                     </a>
-                    <a href="{{ path('question_view', {'id': question.id}) }}">
-                        <button class="btn btn-simple btn-info">{{ question.title }}</button>
-                    </a>
+                    {% if user.type == 0 %}
+                        <div>
+                            <a href="{{ path('question_view', {'id': question.id}) }}">
+                                <button class="btn btn-simple btn-info">{{ question.title }}</button>
+                            </a>
+                        </div>
+                    {% else %}
+                        <h3>{{ question.title }}</h3>
+                    {% endif %}
 
                     {% if question.tag|default %}
                         <span class="label label-info">{{ question.tag }}</span>

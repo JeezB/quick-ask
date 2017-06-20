@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="col-sm-1" style="margin-top: 25px">
-                <button class="btn btn-success btn-fab btn-fab-mini btn-round btn-tooltip" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Tag is used to help you finding your questions based on a keyword. i.e. Thermodynamics ">
+                <button class="btn btn-info btn-fab btn-fab-mini btn-round btn-tooltip" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Tag is used to help you finding your questions based on a keyword. i.e. Thermodynamics ">
                     <i class="material-icons">help_outline</i>
                 </button>
             </div>
@@ -36,7 +36,7 @@
                 style="list-style-type: none;"></ul>
         </div>
         <div>
-            {{ form_widget(form.save, {'attr': {'class': 'btn btn-success'}} ) }}
+            {{ form_widget(form.save, {'attr': {'class': 'btn btn-info'}} ) }}
         </div>
         {{ form_end(form) }}
     </div>
@@ -75,7 +75,6 @@
         function addSuggestionForm($collectionHolder, $newLinkLi) {
             // Get the data-prototype explained earlier
             var prototype = $collectionHolder.data('prototype');
-            console.log(prototype);
 
             // get the new index
             var index = $collectionHolder.data('index');
