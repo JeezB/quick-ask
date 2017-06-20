@@ -42,6 +42,8 @@ class QuestionController extends Controller
 
         $ratios = [];
         $regularRatios = [];
+        $regularRatios[0] = 0;
+        $regularRatios[1] = 0;
         $total = 0;
         /** @var array[Answer] $answers */
         $answers = $question->getAnswers();
@@ -51,7 +53,6 @@ class QuestionController extends Controller
             $suggestion = $answer->getSuggestion();
             if (!array_key_exists($suggestion->getId(), $ratios)) {
                 $ratios[$suggestion->getId()] = 0;
-                $regularRatios[$suggestion->isCorrect()] = 0;
             }
 
             $regularRatios[$suggestion->isCorrect()] += 1;
