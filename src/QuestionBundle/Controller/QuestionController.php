@@ -63,17 +63,17 @@ class QuestionController extends Controller
         $percentages = [];
         foreach ($ratios as $key => $ratio) {
             $value = 0;
-            if (!$total === 0) {
+            if ($total !== 0) {
                 $value = (int)$ratio/(int)$total*100;
             }
 
             $percentages[$key] = floatval(round($value, 1));
         }
-
+        
         $regularPercentages = [];
         foreach($regularRatios as $key => $ratio) {
             $value = 0;
-            if (!$total === 0) {
+            if ($total !== 0) {
                 $value = (int)$ratio/(int)$total*100;
             }
             $regularPercentages[$key] = floatval(round($value, 1));
